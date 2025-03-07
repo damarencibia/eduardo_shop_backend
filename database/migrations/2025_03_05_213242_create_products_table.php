@@ -18,12 +18,14 @@ return new class extends Migration
             $table->text('description');
             $table->decimal('price', 10, 2);
             $table->integer('amount');
-            $table->string('state'); // Ejemplo: "disponible", "agotado"
-            $table->string('dimension')->nullable(); // Ejemplo: "10x20x5 cm"
-            $table->decimal('weight', 10, 2)->nullable(); // En kilogramos
-            $table->string('capacity')->nullable(); // Ejemplo: "5 litros"
-            $table->string('ability')->nullable(); // Habilidad o funcionalidad
+            $table->string('state');
+            $table->string('dimension')->nullable();
+            $table->decimal('weight', 10, 2)->nullable();
+            $table->string('capacity')->nullable();
+            $table->string('ability')->nullable();
             $table->string('color')->nullable();
+            // Relaciones directas
+            $table->foreignId('category_id')->constrained()->onDelete('cascade'); // Nueva columna
             $table->foreignId('subcategory_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
