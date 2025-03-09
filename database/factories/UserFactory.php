@@ -9,18 +9,20 @@ use Illuminate\Support\Str;
 
 class UserFactory extends Factory
 {
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
     public function definition()
     {
         return [
-            'name' => $this->faker->name(),
+            'name' => $this->faker->firstName(),
             'lastname' => $this->faker->lastName(),
             'ci' => $this->faker->unique()->numerify('###########'), // CI único
             'address' => $this->faker->address(),
             'email' => $this->faker->unique()->safeEmail(),
-            'phone' => $this->faker->phoneNumber(),
-            'email_verified_at' => now(),
-            'password' => bcrypt('password'), // Contraseña por defecto
-            'remember_token' => Str::random(10),
+            'phone' => $this->faker->numerify('##########'), // Número de 10 dígitos
         ];
     }
 }
