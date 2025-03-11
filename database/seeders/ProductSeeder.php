@@ -53,6 +53,6 @@ class ProductSeeder extends Seeder
         ]);
 
         // Crear más productos usando factories
-        Product::factory()->count(20)->create();
+        // Product::factory()->count(20)->create();
     }
 }

@@ -1,25 +1,25 @@
 <?php
 
-// app/Http/Controllers/Api/RoleController.php
+// app/Http/Controllers/Api/categoryController.php
 
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Role;
+use App\Models\Category;
 use Illuminate\Support\Facades\Validator;
 
-class RoleController extends Controller
+class CategoryController extends Controller
 {
     /**
-     * Obtener todos los roles.
+     * Obtener todos las Categories.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $roles = Role::all();
-        return response()->json($roles);
+        $categories = Category::all();
+        return response()->json($categories);
     }
 
     /**
@@ -30,17 +30,17 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        $role = Role::find($id);
+        $category = Category::find($id);
 
-        if (!$role) {
-            return response()->json(['message' => 'Rol no encontrado'], 404);
+        if (!$category) {
+            return response()->json(['message' => 'Category no encontrado'], 404);
         }
 
-        return response()->json($role);
+        return response()->json($category);
     }
 
     /**
-     * Crear un nuevo rol.
+     * Crear un nuevo category.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -49,7 +49,7 @@ class RoleController extends Controller
     {
         // Validar los datos de entrada
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|unique:roles|max:255',
+            'name' => 'required|string|unique:categories|max:255',
         ]);
 
         if ($validator->fails()) {
@@ -57,13 +57,13 @@ class RoleController extends Controller
         }
 
         // Crear el rol
-        $role = Role::create($request->all());
+        $category = Category::create($request->all());
 
-        return response()->json($role, 201);
+        return response()->json($category, 201);
     }
 
     /**
-     * Actualizar un rol existente.
+     * Actualizar un category existente.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -71,15 +71,15 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $role = Role::find($id);
+        $category = Category::find($id);
 
-        if (!$role) {
+        if (!$category) {
             return response()->json(['message' => 'Rol no encontrado'], 404);
         }
 
         // Validar los datos de entrada
         $validator = Validator::make($request->all(), [
-            'name' => 'sometimes|string|unique:roles,name,' . $role->id . '|max:255',
+            'name' => 'sometimes|string|unique:categories,name,' . $category->id . '|max:255',
         ]);
 
         if ($validator->fails()) {
@@ -87,9 +87,9 @@ class RoleController extends Controller
         }
 
         // Actualizar el rol
-        $role->update($request->all());
+        $category->update($request->all());
 
-        return response()->json($role);
+        return response()->json($category);
     }
 
     /**
@@ -100,15 +100,15 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        $role = Role::find($id);
+        $category = Category::find($id);
 
-        if (!$role) {
-            return response()->json(['message' => 'Rol no encontrado'], 404);
+        if (!$category) {
+            return response()->json(['message' => 'Category no encontrado'], 404);
         }
 
         // Eliminar el rol
-        $role->delete();
+        $category->delete();
 
-        return response()->json(['message' => 'Rol eliminado correctamente']);
+        return response()->json(['message' => 'Category eliminado correctamente']);
     }
 }

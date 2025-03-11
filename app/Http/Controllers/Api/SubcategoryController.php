@@ -1,25 +1,23 @@
 <?php
 
-// app/Http/Controllers/Api/RoleController.php
-
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Role;
+use App\Models\Subcategory;
 use Illuminate\Support\Facades\Validator;
 
-class RoleController extends Controller
+class SubcategoryController extends Controller
 {
     /**
-     * Obtener todos los roles.
+     * Obtener todos las Categories.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $roles = Role::all();
-        return response()->json($roles);
+        $subcategories = Subcategory::all();
+        return response()->json($subcategories);
     }
 
     /**
@@ -30,17 +28,17 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        $role = Role::find($id);
+        $subcategory = Subcategory::find($id);
 
-        if (!$role) {
-            return response()->json(['message' => 'Rol no encontrado'], 404);
+        if (!$subcategory) {
+            return response()->json(['message' => 'Subcategory no encontrado'], 404);
         }
 
-        return response()->json($role);
+        return response()->json($subcategory);
     }
 
     /**
-     * Crear un nuevo rol.
+     * Crear un nuevo subcategory.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -49,7 +47,7 @@ class RoleController extends Controller
     {
         // Validar los datos de entrada
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|unique:roles|max:255',
+            'name' => 'required|string|unique:subcategories|max:255',
         ]);
 
         if ($validator->fails()) {
@@ -57,13 +55,13 @@ class RoleController extends Controller
         }
 
         // Crear el rol
-        $role = Role::create($request->all());
+        $subcategory = Subcategory::create($request->all());
 
-        return response()->json($role, 201);
+        return response()->json($subcategory, 201);
     }
 
     /**
-     * Actualizar un rol existente.
+     * Actualizar un subcategory existente.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -71,15 +69,15 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $role = Role::find($id);
+        $subcategory = Subcategory::find($id);
 
-        if (!$role) {
-            return response()->json(['message' => 'Rol no encontrado'], 404);
+        if (!$subcategory) {
+            return response()->json(['message' => 'Subcategory no encontrado'], 404);
         }
 
         // Validar los datos de entrada
         $validator = Validator::make($request->all(), [
-            'name' => 'sometimes|string|unique:roles,name,' . $role->id . '|max:255',
+            'name' => 'sometimes|string|unique:subcategories,name,' . $subcategory->id . '|max:255',
         ]);
 
         if ($validator->fails()) {
@@ -87,9 +85,9 @@ class RoleController extends Controller
         }
 
         // Actualizar el rol
-        $role->update($request->all());
+        $subcategory->update($request->all());
 
-        return response()->json($role);
+        return response()->json($subcategory);
     }
 
     /**
@@ -100,15 +98,15 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        $role = Role::find($id);
+        $subcategory = Subcategory::find($id);
 
-        if (!$role) {
-            return response()->json(['message' => 'Rol no encontrado'], 404);
+        if (!$subcategory) {
+            return response()->json(['message' => 'Subcategory no encontrado'], 404);
         }
 
         // Eliminar el rol
-        $role->delete();
+        $subcategory->delete();
 
-        return response()->json(['message' => 'Rol eliminado correctamente']);
+        return response()->json(['message' => 'Subcategory eliminado correctamente']);
     }
 }
