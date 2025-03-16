@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Subacategory;
 use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
@@ -18,7 +19,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
+        $categories = Category::with(['subcategories.products'])->get();
+
         return response()->json($categories);
     }
 
@@ -30,12 +32,12 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        $category = Category::find($id);
+        $category = Category::with("subcategories.products")->find($id);
 
         if (!$category) {
             return response()->json(['message' => 'Category no encontrado'], 404);
         }
-
+        
         return response()->json($category);
     }
 
@@ -111,4 +113,6 @@ class CategoryController extends Controller
 
         return response()->json(['message' => 'Category eliminado correctamente']);
     }
+
+    
 }
